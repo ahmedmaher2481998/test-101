@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# App Structure
 
-## Getting Started
 
-First, run the development server:
+## Main Structure:
+- app/(home)/page.tsx is your main entry point
+    - It likely handles responsive rendering between Mobile and Desktop components
+- Responsive Components:
+    - MobileComponent.tsx - Renders on mobile devices
+    - DesktopComponent.tsx - Renders on desktop devices
+- Authentication Flow:
+    - login/page.tsx - Login page container
+    - LogIn.component.tsx - Contains login form and authentication logic
+    - authed/page.tsx - Protected page for authenticated users
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+```mermaid
+
+flowchart TD
+    %% Main Pages
+    Home[("(home)/page.tsx")]
+    Login[("login/page.tsx")]
+    Authed[("authed/page.tsx")]
+    
+    %% Components
+    Mobile["MobileComponent"]
+    Desktop["DesktopComponent"]
+    LoginComp["LogIn.component.tsx"]
+    
+    %% States
+    AuthContext{{"AuthContext"}}
+    DeviceContext{{"DeviceContext"}}
+    
+    %% File Structure
+    Home --> Mobile
+    Home --> Desktop
+    Login --> LoginComp
+    
+    %% Auth Flow
+    AuthContext --> Home
+    Home -->|"not authenticated"| Login
+    LoginComp -->|"login success"| AuthContext
+    AuthContext -->|"authenticated"| Authed
+    
+    %% Responsive Logic
+    DeviceContext -->|"mobile"| Mobile
+    DeviceContext -->|"desktop"| Desktop
+    
+    %% Styling
+    classDef page fill:#f9d6fe,stroke:#9c27b0,stroke-width:2px
+    classDef component fill:#bbdefb,stroke:#1976d2,stroke-width:2px
+    classDef protected fill:#ffcdd2,stroke:#d32f2f,stroke-width:2px
+    classDef context fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    
+    %% Apply styles
+    class Home,Login page
+    class Authed protected
+    class Mobile,Desktop,LoginComp component
+    class AuthContext,DeviceContext context
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

@@ -19,3 +19,15 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* globals.css */
+
+.mobile-layout {
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+.desktop-layout {
+  display: flex;
+  padding: 2rem;
+  background-color: #fff;
+}

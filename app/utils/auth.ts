@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 
 export async function isAuthed(): Promise<boolean> {
   const authCookie = (await cookies()).get("auth")?.value || "false" 
+  console.log("🚀 ~ isAuthed ~ authCookie:", authCookie)
   return authCookie === "true";
 }
 
